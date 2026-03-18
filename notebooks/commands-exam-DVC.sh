@@ -11,9 +11,11 @@ python ./src/data/make_dataset.py
 ##build features
 python ./src/features/build_features.py
 
-
 ##train model
 python ./src/models/train_model.py
+
+##evaluate model
+python ./src/models/evaluate_model.py
 
 
 
