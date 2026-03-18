@@ -12,6 +12,8 @@ python ./src/data/make_dataset.py
 python ./src/features/build_features.py
 
 
+##train model
+python ./src/models/train_model.py
 
 
 
