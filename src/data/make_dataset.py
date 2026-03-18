@@ -40,6 +40,8 @@ def process_data(input_filepath_df, output_filepath):
     # Save dataframes to their respective output file paths
     save_dataframes(X_train, X_test, y_train, y_test, output_filepath)
 
+    print(f"Saved X_train, X_test, y_train, y_test to {output_filepath}")
+
 def import_dataset(file_path, **kwargs):
     return pd.read_csv(file_path, **kwargs)
 
