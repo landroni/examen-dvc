@@ -1,9 +1,11 @@
+#################
 ##activate venv
 cd accidents/examen-dvc/
 source ../Template_MLOps_accidents/env/bin/activate  ##where exam-DVC venv resides
 
 
 
+#################
 ##create modified dataset
 python ./src/data/make_dataset.py
 # python ./src/data/make_dataset.py ./data/raw ./data/processed  
@@ -22,6 +24,7 @@ python ./src/models/predict_model.py
 
 
 
+#################
 ##DVC
 ##create local dvc repo
 dvc init
@@ -38,6 +41,8 @@ dvc remote default remote_dagshub
 dvc push
 
 
+#################
+##Add files to DVC
 ##rm indiv data dirs from git tracking
 git rm -r --cached 'data/raw'
 git rm -r --cached 'data/processed'
@@ -55,8 +60,13 @@ dvc add models/trained_model.joblib
 git add .
 git commit -m "Add /data dirs and /models files to DVC"
 
+##(3)push dvc data to remote folder & git push
+dvc push
+git push
 
 
+#################
+##DVC : Pipeline
 
 
 
