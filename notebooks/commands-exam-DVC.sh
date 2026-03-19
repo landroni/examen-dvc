@@ -17,6 +17,8 @@ python ./src/models/train_model.py
 ##evaluate model
 python ./src/models/evaluate_model.py
 
+##predict model
+python ./src/models/predict_model.py
 
 
 

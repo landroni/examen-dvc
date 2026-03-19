@@ -3,6 +3,7 @@ import numpy as np
 from joblib import load
 import json
 from pathlib import Path
+import os
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
@@ -16,12 +17,24 @@ def main(repo_path):
     y_test_pred = model.predict(X_test_scaled)
     m_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
     m_mae = mean_absolute_error(y_test, y_test_pred)
-
     metrics = {"rmse": m_rmse, "mae": m_mae}
     print(metrics)
-    metrics_path = repo_path / "metrics/scores.json"
-    metrics_path.write_text(json.dumps(metrics))
-    print(f"Saved metrics to {metrics_path}")
+
+    ##save metrics
+    metrics_path = repo_path / "metrics"
+    os.makedirs(metrics_path, exist_ok=True)
+    metrics_file = metrics_path / "scores.json"
+    metrics_file.write_text(json.dumps(metrics))
+    print(f"Saved metrics to {metrics_file}")
+
+    ##save predictions
+    predictions_path = repo_path / "data/predictions"
+    os.makedirs(predictions_path, exist_ok=True)
+    predictions_file = predictions_path / "predictions.csv"
+    print(pd.DataFrame(y_test_pred))
+    pd.DataFrame(y_test_pred).to_csv(predictions_file)
+    print(f"Saved predictions to {predictions_file}")
+
 
 if __name__ == "__main__":
     repo_path = Path(__file__).parent.parent.parent
