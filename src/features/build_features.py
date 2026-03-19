@@ -7,7 +7,8 @@ sys.path.append('src/data/')
 from check_structure import check_existing_file
 
 
-def build_features(processed_path = "data/processed"):
+def build_features(processed_path = "data/processed", 
+                   scaled_path = "data/scaled"):
     ##FIXME could split this into further functions (import, scale, etc.)
     ##load data prepared by make_dataset
     print("Using processed_path:", processed_path)
@@ -23,6 +24,7 @@ def build_features(processed_path = "data/processed"):
 
     print(f"X_train, X_test: {[i.shape for i in (X_train, X_test)]}")
 
+    ##standardize data
     scaler = StandardScaler()
     X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train), index=X_train.index)
     X_test_scaled = pd.DataFrame(scaler.transform(X_test), index=X_test.index)
@@ -31,9 +33,10 @@ def build_features(processed_path = "data/processed"):
     print("Standardization done")
 
     # Save dataframes to their respective output file paths
-    save_dataframes(X_train_scaled, X_test_scaled, processed_path)
+    os.makedirs(scaled_path, exist_ok=True)
+    save_dataframes(X_train_scaled, X_test_scaled, scaled_path)
 
-    print(f"Saved X_train_scaled, X_test_scaled to {processed_path}")
+    print(f"Saved X_train_scaled, X_test_scaled to {scaled_path}")
 
     return None
 

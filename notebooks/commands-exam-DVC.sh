@@ -68,6 +68,60 @@ git push
 #################
 ##DVC : Pipeline
 
+##remove existing DVC tracked files or pipeline won't set up
+dvc remove data/processed.dvc data/predictions.dvc models/trained_model.joblib.dvc --outs
+rm metrics/scores.json
+
+
+##1. 'prepare': prepare dataset splits
+dvc stage add -n prepare \
+              -d src/data/make_dataset.py -d data/raw \
+              -o data/processed \
+              python src/data/make_dataset.py
+##execute stage and check DAG pipeline graph
+dvc repro
+dvc dag
+
+
+##2.'features': build features
+dvc stage add -n features \
+              -d src/features/build_features.py \
+              -d data/processed \
+              -o data/scaled \
+              python src/features/build_features.py
+##execute stage and check DAG pipeline graph
+dvc repro
+dvc dag
+
+
+##3. 'train': train model (gridsearch & final model)
+dvc stage add -n train \
+              -d src/models/train_model.py \
+              -d data/processed \
+              -d data/scaled \
+              -o models/trained_model.joblib \
+              python src/models/train_model.py
+dvc repro
+dvc dag
+
+
+##4. 'evaluate': evaluate model
+dvc stage add -n evaluate \
+              -d src/models/evaluate_model.py \
+              -d models/trained_model.joblib \
+              -o data/predictions \
+              -M metrics/scores.json \
+              python src/models/evaluate_model.py
+dvc repro
+dvc dag
+
+##show stored model metrics
+dvc metrics show
+
+
+##add to git / dvc
+git add .
+git commit -m "DVC Pipeline: Trained and evaluated ElasticNet with GridSearch, rmse = 0.96"
 
 
 
