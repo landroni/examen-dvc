@@ -1,6 +1,6 @@
 ##activate venv
 cd accidents/examen-dvc/
-source ../Template_MLOps_accidents/env/bin/activate
+source ../Template_MLOps_accidents/env/bin/activate  ##where exam-DVC venv resides
 
 
 
@@ -19,6 +19,27 @@ python ./src/models/evaluate_model.py
 
 ##predict model
 python ./src/models/predict_model.py
+
+
+
+##DVC
+##create local dvc repo
+dvc init
+dvc config core.analytics false  ##disable sending analytics (opt)
+
+##set up DagsHub as DVC remote
+dvc remote add remote_dagshub s3://dvc
+dvc remote modify remote_dagshub endpointurl https://dagshub.com/landroni/examen-dvc.s3
+
+dvc remote modify remote_dagshub --local access_key_id 5b6faf5dddd0c1b5a532f91eb75ebcbff200413d
+dvc remote modify remote_dagshub --local secret_access_key 5b6faf5dddd0c1b5a532f91eb75ebcbff200413d
+
+dvc remote default remote_dagshub
+dvc push
+
+
+
+
 
 
 

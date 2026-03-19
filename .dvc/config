@@ -1,0 +1,6 @@
+[core]
+    analytics = false
+    remote = remote_dagshub
+['remote "remote_dagshub"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/landroni/examen-dvc.s3
