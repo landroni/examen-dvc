@@ -48,6 +48,14 @@ dvc add data/raw
 dvc add data/processed
 dvc add data/predictions
 
+##add model binary file to DVC
+dvc add models/trained_model.joblib
+
+##stage all DVC dirs/files 
+git add .
+git commit -m "Add /data dirs and /models files to DVC"
+
+
 
 
 
