@@ -38,6 +38,15 @@ dvc remote default remote_dagshub
 dvc push
 
 
+##rm indiv data dirs from git tracking
+git rm -r --cached 'data/raw'
+git rm -r --cached 'data/processed'
+git rm -r --cached 'data/predictions'
+
+##add dir to DVC
+dvc add data/raw
+dvc add data/processed
+dvc add data/predictions
 
 
 
