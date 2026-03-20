@@ -123,5 +123,11 @@ dvc metrics show
 git add .
 git commit -m "DVC Pipeline: Trained and evaluated ElasticNet with GridSearch, rmse = 0.96"
 
+dvc commit
+dvc push
+# vscode: publish branch
+git push
+
+
 
 
