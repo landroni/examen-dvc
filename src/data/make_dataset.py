@@ -20,6 +20,8 @@ def main(input_filepath, output_filepath, raw_csv_name = 'raw.csv'):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+
+    ##FIXME probably should run import_raw_data.py here
     input_filepath = click.prompt('Enter the file path for the input data', type=click.Path(exists=True))
     input_filepath_df = f"{input_filepath}/{raw_csv_name}"
     output_filepath = click.prompt('Enter the file path for the output preprocessed data (e.g., output/preprocessed_data.csv)', type=click.Path())

@@ -7,8 +7,8 @@ import os
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
-X_train_scaled = pd.read_csv('data/processed/X_train_scaled.csv')
-X_test_scaled = pd.read_csv('data/processed/X_test_scaled.csv')
+X_train_scaled = pd.read_csv('data/scaled/X_train_scaled.csv')
+X_test_scaled = pd.read_csv('data/scaled/X_test_scaled.csv')
 y_train = pd.read_csv('data/processed/y_train.csv')
 y_test = pd.read_csv('data/processed/y_test.csv')
 

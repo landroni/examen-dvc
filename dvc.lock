@@ -1,0 +1,81 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 41dee78430cbebe25be9986bbb599d4a.dir
+      size: 333757
+      nfiles: 1
+    - path: src/data/make_dataset.py
+      hash: md5
+      md5: dee27ace548658429d758d3b0a6f1319
+      size: 3146
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 02c868b07397db9e17a4010f81481414.dir
+      size: 294499
+      nfiles: 4
+  features:
+    cmd: python src/features/build_features.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 02c868b07397db9e17a4010f81481414.dir
+      size: 294499
+      nfiles: 4
+    - path: src/features/build_features.py
+      hash: md5
+      md5: dea2f0eef6813de8077cab7cad314c1b
+      size: 1903
+    outs:
+    - path: data/scaled
+      hash: md5
+      md5: c3ae5b7758bcd8f2e92f0b378d2d7d50.dir
+      size: 284294
+      nfiles: 2
+  train:
+    cmd: python src/models/train_model.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 02c868b07397db9e17a4010f81481414.dir
+      size: 294499
+      nfiles: 4
+    - path: data/scaled
+      hash: md5
+      md5: c3ae5b7758bcd8f2e92f0b378d2d7d50.dir
+      size: 284294
+      nfiles: 2
+    - path: src/models/train_model.py
+      hash: md5
+      md5: 66b30c99cea1fceccc87b51d49d8cb1e
+      size: 1833
+    outs:
+    - path: models/trained_model.joblib
+      hash: md5
+      md5: 393c56279d4bba7648de43df0bd09eb6
+      size: 1103
+  evaluate:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - path: models/trained_model.joblib
+      hash: md5
+      md5: 393c56279d4bba7648de43df0bd09eb6
+      size: 1103
+    - path: src/models/evaluate_model.py
+      hash: md5
+      md5: 1972acd87cdde6f25f3b4e07199784e9
+      size: 1397
+    outs:
+    - path: data/predictions
+      hash: md5
+      md5: a4172c3cebdfe6262443b059b1eef20f.dir
+      size: 12243
+      nfiles: 1
+    - path: metrics/scores.json
+      hash: md5
+      md5: 12237410d8cf69a1f756744dcee1275e
+      size: 55

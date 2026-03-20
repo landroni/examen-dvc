@@ -9,12 +9,13 @@ from sklearn.model_selection import GridSearchCV
 
 print(f"joblib version: {joblib.__version__}")
 
-def train_model(processed_path = "data/processed"):
+def train_model(processed_path = "data/processed", 
+                scaled_path = "data/scaled"):
     ##import processed data
-    X_train_scaled = pd.read_csv('data/processed/X_train_scaled.csv')
-    X_test_scaled = pd.read_csv('data/processed/X_test_scaled.csv')
-    y_train = pd.read_csv('data/processed/y_train.csv')
-    y_test = pd.read_csv('data/processed/y_test.csv')
+    X_train_scaled = pd.read_csv(f"{scaled_path}/X_train_scaled.csv")
+    X_test_scaled = pd.read_csv(f"{scaled_path}/X_test_scaled.csv")
+    y_train = pd.read_csv(f"{processed_path}/y_train.csv")
+    y_test = pd.read_csv(f"{processed_path}/y_test.csv")
 
 
     ##GridSearch ElasticNet
@@ -33,7 +34,8 @@ def train_model(processed_path = "data/processed"):
     print(grid_reg_en_best_params)
 
 
-    #--Train the final model
+    ##Train the final model
+    ##FIXME maybe split gridsearch from training final model to separate script
     model_en = ElasticNet(alpha = grid_reg_en_best_params['alpha'], 
                         l1_ratio= grid_reg_en_best_params['l1_ratio'])
     model_en.fit(X_train_scaled, y_train)
